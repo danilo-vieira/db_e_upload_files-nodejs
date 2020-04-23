@@ -17,17 +17,16 @@ export default class AddCategoryIdToTransactions1587406278251
       }),
     );
 
-    await queryRunner.createForeignKey(
-      'transactions',
-      new TableForeignKey({
-        columnNames: ['category_id'],
-        referencedTableName: 'categories',
-        referencedColumnNames: ['id'],
-        name: 'TransactionCategory',
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-      }),
-    );
+    const foreignKey = new TableForeignKey({
+      columnNames: ['category_id'],
+      referencedColumnNames: ['id'],
+      referencedTableName: 'categories',
+      name: 'TransactionCategory',
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
+    });
+
+    await queryRunner.createForeignKey('transactions', foreignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
